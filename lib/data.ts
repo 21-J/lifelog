@@ -11,10 +11,15 @@ export type Post = {
 
 export type Moment = {
   id: string
+  author: string
+  avatar: string
   content: string
   time: string
+  createdAt: number
   location?: string
   mood: string
+  likes: number
+  comments: number
 }
 
 export type Good = {
@@ -107,23 +112,64 @@ export const posts: Post[] = [
 export const initialMoments: Moment[] = [
   {
     id: 'm1',
+    author: '片刻',
+    avatar: '/avatar.png',
     content: '今天终于把拖了两周的博客重构做完了，看着干净的代码有种莫名的满足感。',
     time: '2 小时前',
+    createdAt: Date.now() - 2 * 60 * 60 * 1000,
     location: '杭州',
     mood: '满足',
+    likes: 24,
+    comments: 6,
   },
   {
     id: 'm2',
-    content: '傍晚去河边跑了 5 公里，风很舒服。坚持运动第 12 天。',
-    time: '昨天',
-    location: '钱塘江畔',
-    mood: '轻松',
+    author: '林小满',
+    avatar: '/placeholder-user.jpg',
+    content:
+      '第一次尝试手冲咖啡，水温和注水节奏真的很讲究，翻车了两次终于出了一杯还算能喝的。生活的仪式感就是这样一点点堆起来的吧。',
+    time: '5 小时前',
+    createdAt: Date.now() - 5 * 60 * 60 * 1000,
+    location: '上海',
+    mood: '开心',
+    likes: 88,
+    comments: 21,
   },
   {
     id: 'm3',
-    content: '读完了《深度工作》，最大的收获是：专注本身就是一种稀缺的能力。',
-    time: '3 天前',
+    author: '阿泽',
+    avatar: '/placeholder-user.jpg',
+    content: '傍晚去河边跑了 5 公里，风很舒服。坚持运动第 12 天，感觉整个人都轻盈了。',
+    time: '昨天',
+    createdAt: Date.now() - 26 * 60 * 60 * 1000,
+    location: '钱塘江畔',
+    mood: '轻松',
+    likes: 42,
+    comments: 9,
+  },
+  {
+    id: 'm4',
+    author: 'Nora',
+    avatar: '/placeholder-user.jpg',
+    content:
+      '读完了《深度工作》，最大的收获是：专注本身就是一种稀缺的能力。在这个信息爆炸的时代，能沉下心做一件事的人真的越来越少了。',
+    time: '2 天前',
+    createdAt: Date.now() - 2 * 24 * 60 * 60 * 1000,
     mood: '收获',
+    likes: 156,
+    comments: 34,
+  },
+  {
+    id: 'm5',
+    author: '老陈',
+    avatar: '/placeholder-user.jpg',
+    content: '周末带娃去了近郊露营，孩子第一次看到满天星星激动得不行。有些风景，真的要走出去才能遇见。',
+    time: '3 天前',
+    createdAt: Date.now() - 3 * 24 * 60 * 60 * 1000,
+    location: '莫干山',
+    mood: '满足',
+    likes: 203,
+    comments: 47,
   },
 ]
 

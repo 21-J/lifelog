@@ -1,72 +1,65 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowUpRight, Clock, MessageCircle, ShoppingBag } from 'lucide-react'
+import { ArrowUpRight, Clock, MessageCircle, Heart, MapPin } from 'lucide-react'
 import { Card } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { posts, stats, initialMoments, goods } from '@/lib/data'
+import { posts, initialMoments } from '@/lib/data'
+
+const messages = [
+  { id: 'msg1', name: '小林', text: '这篇专注的文章太戳我了，已经收藏。', time: '1 小时前' },
+  { id: 'msg2', name: '阿茶', text: '露营装备清单很实用，下周就去试试！', time: '昨天' },
+  { id: 'msg3', name: 'Yuki', text: '河边跑步那条动态好治愈，一起加油。', time: '2 天前' },
+]
 
 export default function HomePage() {
-  const [featured, ...rest] = posts
-
   return (
     <div className="flex flex-col gap-10">
       {/* Header */}
       <header className="flex flex-col gap-2">
-        <p className="text-sm font-medium text-primary">最新文章</p>
         <h1 className="font-serif text-3xl leading-tight md:text-4xl">
-          记录思考，也记录生活
+          你好，我是片刻
         </h1>
         <p className="max-w-lg text-sm text-muted-foreground">
-          这里收录我认真写下的长文，以及一些正在发生的片刻。慢慢读，不着急。
+          在这里记录正在发生的动态、认真写下的文章，也收下你留下的每一句话。
         </p>
       </header>
 
-      {/* Featured post */}
-      <Link href="#" className="group block">
-        <Card className="overflow-hidden transition-shadow hover:shadow-md">
-          <div className="grid md:grid-cols-2">
-            <div className="relative aspect-[16/11] overflow-hidden md:aspect-auto">
-              <Image
-                src={featured.cover || '/placeholder.svg'}
-                alt={featured.title}
-                fill
-                className="object-cover transition-transform duration-500 group-hover:scale-105"
-                priority
-              />
-            </div>
-            <div className="flex flex-col justify-center gap-4 p-6 md:p-8">
-              <div className="flex items-center gap-2">
-                <Badge className="bg-primary/10 text-primary">
-                  {featured.category}
-                </Badge>
-                <span className="text-xs text-muted-foreground">置顶推荐</span>
-              </div>
-              <h2 className="font-serif text-2xl leading-snug transition-colors group-hover:text-primary md:text-3xl">
-                {featured.title}
-              </h2>
-              <p className="text-sm leading-relaxed text-muted-foreground">
-                {featured.excerpt}
+      {/* Moments feed */}
+      <section className="flex flex-col gap-5">
+        <div className="flex items-baseline justify-between">
+          <h2 className="font-serif text-xl">最近动态</h2>
+          <Link
+            href="/moments"
+            className="text-sm text-muted-foreground transition-colors hover:text-primary"
+          >
+            全部动态
+          </Link>
+        </div>
+        <div className="flex flex-col gap-3">
+          {initialMoments.map((m) => (
+            <Card key={m.id} className="flex flex-col gap-3 p-5">
+              <p className="text-sm leading-relaxed text-foreground/90">
+                {m.content}
               </p>
-              <div className="flex items-center gap-4 text-xs text-muted-foreground">
-                <span>{featured.date}</span>
-                <span className="flex items-center gap-1">
-                  <Clock className="size-3.5" />
-                  {featured.readTime}
-                </span>
-                <span className="ml-auto flex items-center gap-1 font-medium text-primary">
-                  阅读全文
-                  <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                </span>
+              <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                <span>{m.time}</span>
+                {m.location && (
+                  <span className="flex items-center gap-1">
+                    <MapPin className="size-3.5" />
+                    {m.location}
+                  </span>
+                )}
+                <Badge className="bg-accent">{m.mood}</Badge>
               </div>
-            </div>
-          </div>
-        </Card>
-      </Link>
+            </Card>
+          ))}
+        </div>
+      </section>
 
       {/* Article list */}
       <section className="flex flex-col gap-5">
         <div className="flex items-baseline justify-between">
-          <h2 className="font-serif text-xl">更多文章</h2>
+          <h2 className="font-serif text-xl">最新文章</h2>
           <Link
             href="#"
             className="text-sm text-muted-foreground transition-colors hover:text-primary"
@@ -74,11 +67,11 @@ export default function HomePage() {
             查看全部
           </Link>
         </div>
-        <div className="grid gap-5 sm:grid-cols-2">
-          {rest.map((post) => (
+        <div className="flex flex-col gap-4">
+          {posts.map((post) => (
             <Link key={post.id} href="#" className="group block">
-              <Card className="h-full overflow-hidden transition-shadow hover:shadow-md">
-                <div className="relative aspect-[16/9] overflow-hidden">
+              <Card className="flex gap-4 overflow-hidden p-4 transition-shadow hover:shadow-md">
+                <div className="relative aspect-[4/3] w-28 shrink-0 overflow-hidden rounded-lg sm:w-40">
                   <Image
                     src={post.cover || '/placeholder.svg'}
                     alt={post.title}
@@ -86,10 +79,16 @@ export default function HomePage() {
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                 </div>
-                <div className="flex flex-col gap-3 p-5">
+                <div className="flex min-w-0 flex-col gap-2 py-1">
                   <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                    <Badge className="bg-accent">{post.category}</Badge>
+                    <Badge className="bg-primary/10 text-primary">
+                      {post.category}
+                    </Badge>
                     <span>{post.date}</span>
+                    <span className="hidden items-center gap-1 sm:flex">
+                      <Clock className="size-3.5" />
+                      {post.readTime}
+                    </span>
                   </div>
                   <h3 className="font-serif text-lg leading-snug transition-colors group-hover:text-primary">
                     {post.title}
@@ -97,16 +96,10 @@ export default function HomePage() {
                   <p className="line-clamp-2 text-sm text-muted-foreground">
                     {post.excerpt}
                   </p>
-                  <div className="mt-1 flex flex-wrap gap-1.5">
-                    {post.tags.map((t) => (
-                      <span
-                        key={t}
-                        className="text-xs text-muted-foreground"
-                      >
-                        #{t}
-                      </span>
-                    ))}
-                  </div>
+                  <span className="mt-auto flex items-center gap-1 text-xs font-medium text-primary">
+                    阅读全文
+                    <ArrowUpRight className="size-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  </span>
                 </div>
               </Card>
             </Link>
@@ -114,71 +107,30 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Stats */}
-      <section className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-        {stats.map((s) => (
-          <Card key={s.label} className="p-4">
-            <p className="font-serif text-2xl">{s.value}</p>
-            <p className="mt-1 text-xs text-muted-foreground">{s.label}</p>
-          </Card>
-        ))}
-      </section>
-
-      {/* Cross-links */}
-      <section className="grid gap-5 md:grid-cols-2">
-        <Card className="flex flex-col gap-4 p-6">
-          <div className="flex items-center gap-2">
-            <span className="flex size-9 items-center justify-center rounded-lg bg-primary/10 text-primary">
-              <MessageCircle className="size-4.5" />
-            </span>
-            <div>
-              <h3 className="text-sm font-semibold">最近动态</h3>
-              <p className="text-xs text-muted-foreground">碎碎念一下</p>
+      {/* Messages */}
+      <section className="flex flex-col gap-5">
+        <div className="flex items-center gap-2">
+          <MessageCircle className="size-4.5 text-primary" />
+          <h2 className="font-serif text-xl">最新留言</h2>
+        </div>
+        <Card className="flex flex-col divide-y divide-border">
+          {messages.map((msg) => (
+            <div key={msg.id} className="flex items-start gap-3 p-4">
+              <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-primary/10 text-sm font-medium text-primary">
+                {msg.name.slice(0, 1)}
+              </span>
+              <div className="flex min-w-0 flex-1 flex-col gap-0.5">
+                <div className="flex items-center gap-2">
+                  <span className="text-sm font-medium">{msg.name}</span>
+                  <span className="text-xs text-muted-foreground">
+                    {msg.time}
+                  </span>
+                </div>
+                <p className="text-sm text-foreground/90">{msg.text}</p>
+              </div>
+              <Heart className="size-4 shrink-0 text-muted-foreground/50" />
             </div>
-            <Link
-              href="/moments"
-              className="ml-auto text-xs text-primary hover:underline"
-            >
-              全部
-            </Link>
-          </div>
-          <ul className="flex flex-col gap-3">
-            {initialMoments.slice(0, 2).map((m) => (
-              <li key={m.id} className="text-sm">
-                <p className="leading-relaxed text-foreground/90">{m.content}</p>
-                <p className="mt-1 text-xs text-muted-foreground">{m.time}</p>
-              </li>
-            ))}
-          </ul>
-        </Card>
-
-        <Card className="flex flex-col gap-4 p-6">
-          <div className="flex items-center gap-2">
-            <span className="flex size-9 items-center justify-center rounded-lg bg-primary/10 text-primary">
-              <ShoppingBag className="size-4.5" />
-            </span>
-            <div>
-              <h3 className="text-sm font-semibold">好物推荐</h3>
-              <p className="text-xs text-muted-foreground">用过才敢分享</p>
-            </div>
-            <Link
-              href="/goods"
-              className="ml-auto text-xs text-primary hover:underline"
-            >
-              全部
-            </Link>
-          </div>
-          <ul className="flex flex-col gap-3">
-            {goods.slice(0, 3).map((g) => (
-              <li key={g.id} className="flex items-center gap-3 text-sm">
-                <span className="text-xl">{g.emoji}</span>
-                <span className="flex-1 truncate">{g.name}</span>
-                <span className="text-xs font-medium text-primary">
-                  {g.price}
-                </span>
-              </li>
-            ))}
-          </ul>
+          ))}
         </Card>
       </section>
     </div>

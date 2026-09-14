@@ -177,7 +177,7 @@ export const goods: Good[] = [
   {
     id: 'g1',
     name: '机械键盘 · 静音红轴',
-    category: '数码',
+    category: '生活',
     price: '¥499',
     rating: 5,
     reason: '手感顺滑，深夜码字也不会吵到家人，用了半年依然稳定。',
@@ -195,7 +195,7 @@ export const goods: Good[] = [
   {
     id: 'g3',
     name: '轻量化露营椅',
-    category: '户外',
+    category: '生活',
     price: '¥199',
     rating: 5,
     reason: '折叠后只有水瓶大小，近郊露营和公园放空都离不开它。',
@@ -204,7 +204,7 @@ export const goods: Good[] = [
   {
     id: 'g4',
     name: '电子墨水阅读器',
-    category: '数码',
+    category: '生活',
     price: '¥1299',
     rating: 5,
     reason: '护眼且专注，通勤路上读完了好几本一直想读的书。',
@@ -213,7 +213,7 @@ export const goods: Good[] = [
   {
     id: 'g5',
     name: '香薰蜡烛 · 雪松',
-    category: '家居',
+    category: '生活',
     price: '¥128',
     rating: 4,
     reason: '写作时点上，木质香气让人很快静下心来。',

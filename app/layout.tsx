@@ -1,36 +1,31 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
+import { Inter, Fraunces } from 'next/font/google'
 import './globals.css'
+import { SiteShell } from '@/components/site-shell'
+
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-sans',
+  display: 'swap',
+})
+
+const fraunces = Fraunces({
+  subsets: ['latin'],
+  variable: '--font-serif',
+  display: 'swap',
+})
 
 export const metadata: Metadata = {
-  title: 'v0 App',
-  description: 'Created with v0',
+  title: '片刻 · 个人博客与生活空间',
+  description:
+    '一个简洁现代的个人博客系统：记录文章、发布动态、分享好物、管理生活与课表。',
   generator: 'v0.app',
-  icons: {
-    icon: [
-      {
-        url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
-      },
-      {
-        url: '/icon-dark-32x32.png',
-        media: '(prefers-color-scheme: dark)',
-      },
-      {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
-      },
-    ],
-    apple: '/apple-icon.png',
-  },
 }
 
 export const viewport: Viewport = {
-  colorScheme: 'light dark',
-  themeColor: [
-    { media: '(prefers-color-scheme: light)', color: 'white' },
-    { media: '(prefers-color-scheme: dark)', color: 'black' },
-  ],
+  colorScheme: 'light',
+  themeColor: '#f3f2f8',
 }
 
 export default function RootLayout({
@@ -39,9 +34,9 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
-      <body className="antialiased">
-        {children}
+    <html lang="zh-CN" className={`${inter.variable} ${fraunces.variable}`}>
+      <body className="antialiased font-sans">
+        <SiteShell>{children}</SiteShell>
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>

@@ -6,7 +6,7 @@ import { Card } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { goods } from '@/lib/data'
 
-const categories = ['全部', '生活', '美食', '健康']
+const categories = ['全部', '数码', '生活', '户外', '家居', '健康']
 
 export default function GoodsPage() {
   const [active, setActive] = useState('全部')
